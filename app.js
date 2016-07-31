@@ -17,8 +17,8 @@ var app = function(){
   var app = {};
 
   var config = {
-    imageBasePath: './images/',
-    gluonPrefix: 'gluon-ffda-',
+    imageBasePath: './firmware/',
+    gluonPrefix: 'gluon-ffog-',
     vendors: {
       "8devices": "8devices",
       "alfa": "ALFA Network",
