@@ -15,15 +15,15 @@
       <img src="./router.png" >
       <div class="tab-content">
         <div class="tab-pane step-model active">
-          <span class="firmwareTableLink" onclick="app.showFirmwareTable();">Tabelle anzeigen</span>
+          <span class="firmwareTableLink" onclick="firmwarewizard.showFirmwareTable();">Tabelle anzeigen</span>
           <h1>Wähle deine Firmware</h1>
           <p>Erst mit der Freifunk-Firmware wird dein Router zu einem Teil des Freifunk-Netzes. Sie ist fertig vorkonfiguriert, um Kontakt mit benachbarten Freifunk-Knoten aufzunehmen, ein offenes und anonymes Freifunk-WLAN auszusenden und dich dabei vor der Störerhaftung zu schützen.</p>
           <select class="ulselect vendorselect"
-                  onchange="app.setVendor(this.value)"></select>
+                  onchange="firmwarewizard.setVendor(this.value)"></select>
           <select class="ulselect modelselect initiallyhidden"
-                  onchange="app.setModel(this.value)"></select>
+                  onchange="firmwarewizard.setModel(this.value)"></select>
           <select class="ulselect revisionselect initiallyhidden"
-                  onchange="app.setRevision(this.value)"></select>
+                  onchange="firmwarewizard.setRevision(this.value)"></select>
         </div>
         <div class="tab-pane step-type">
           <hr>
@@ -52,7 +52,7 @@
           <p>Die Auswahl der passenden Version entscheidet &uuml;ber die Stablit&auml;t des Routers und den potentiell anfallenden Wartungsaufwand.</p>
           <p>Für das gewählte Routermodell sind folgende Versionen vorhanden:</p>
           <div class="box-inset warning-experimental initiallyhidden">
-            Vorsicht! Unsere experimentell Firmware wurde <b>nicht</b> getestet und kann dein Gerät jederzeit und unangekündigt in einen Zustand versetzen, in dem du nur mit einem Lötkolben und dem Öffnen des Gehäuses weiter kommst. Verwende diese Version nur, wenn Dir darüber im klaren bist!
+            Vorsicht! Unsere experimentell Firmware wurde <b>nicht</b> getestet und kann dein Gerät jederzeit und unangekündigt in einen Zustand versetzen, in dem du nur mit einem Lötkolben und dem Öffnen des Gehäuses weiter kommst. Verwende diese Version nur, wenn Dir darüber im Klaren bist!
             <div class="branch-experimental-dl"></div>
           </div>
           <div class="branchselect"></div>
@@ -62,7 +62,10 @@
 
     <div class="container firmwareTable initiallyhidden">
       <hr>
-      <span class="firmwareTableLink" onclick="app.hideFirmwareTable();">zurück zum Auswahlmenü</span>
+      <span class="firmwareTableLink"
+            onclick="firmwarewizard.hideFirmwareTable();">
+        zurück zum Auswahlmenü
+      </span>
       <a name="firmwareTable"></a>
       <h1>Firmware</h1>
       <table class="table table-striped">
@@ -84,6 +87,7 @@
 
     <script src="vendor/jquery-2.2.0.min.js"></script>
     <script src="vendor/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script src="devices.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
