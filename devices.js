@@ -1,220 +1,186 @@
 var vendormodels = {
   "8devices": {
-    "displayName": "8devices",
-    "models": {
-      "(carambola2-board)()": ["Carambola Board 2"]
-    }
+    "Carambola Board 2": "8devices-carambola2-board"
   },
-  "alfa": {
-    "displayName": "ALFA Network",
-    "models": {
-      "(ap121$)()": "AP121",
-      "network-(ap121$)()": "AP121",
-      "(ap121u)()": "AP121U",
-      "network-(ap121u)()": "AP121U",
-      "(hornet-ub)()": "Hornet-UB",
-      "network-(hornet-ub)()": "Hornet-UB",
-      "network-(tube2h)()": "Tube2H"
-    }
+
+  "Alfa": {
+    "AP121": {"alfa-ap121": "", "alfa-network-ap121": ""},
+    "AP121U": {"alfa-ap121u": "", "alfa-network-ap121u": ""},
+    "Hornet-UB": {"alfa-hornet-ub": "", "alfa-network-hornet-ub": ""},
+    "Tube2H": {"alfa-tube2h": "", "alfa-network-tube2h": ""},
+    "N2 / N5": {"alfa-n2-n5": "", "alfa-network-n2-n5": ""},
   },
-  "allnet": {
-    "displayName": "Allnet",
-    "models": {
-      "(all0315n)()": "ALL0315N"
-    }
+
+  "Allnet": {
+    "ALL0315N": "allnet-all0315n"
   },
-  "buffalo": {
-    "displayName": "Buffalo",
-    "models": {
-      "(wzr-600dhp)()": "WZR-600DHP",
-      "(wzr-hp-ag300h)()": "WZR-HP-AG300H",
-      "(wzr-hp-g300h)()": "WZR-HP-G300H",
-      "(wzr-hp-g300nh$)()": ["WZR-HP-G300NH", "v1"],
-      "(wzr-hp-g300nh2)()": ["WZR-HP-G300NH", "v2"],
-      "(wzr-hp-g450h)()": "WZR-HP-G450H"
-    }
+
+  "Buffalo": {
+    "WZR-600DHP": {"buffalo-wzr-600dhp": "v2"},
+    "WZR-HP-AG300H": {"buffalo-wzr-hp-ag300h": "", "buffalo-wzr-hp-ag300h-wzr-600dhp": ""},
+    "WZR-HP-G300H": {"buffalo-wzr-hp-g300h": ""},
+    "WZR-HP-G300NH": {"buffalo-wzr-hp-g300nh": "v1", "buffalo-wzr-hp-g300nh2": "v2"},
+    "WZR-HP-G450H": {"buffalo-wzr-hp-g450h": ""},
   },
-  "d-link": {
-    "displayName": " D-Link",
-    "models": {
-      "(dir-505)-rev-(a[0-9])": "DIR-505",
-      "(dir-615)-rev-(c1)": "DIR-615",
-      "(dir-825)-rev-(b1)": "DIR-825",
-      "(dir-860l)-(b1)": "DIR-860L"
-    }
+
+  "D-Link": {
+    "DIR-505": "d-link-dir-505-rev",
+    "DIR-615": {"d-link-dir-615-c1": "c1/c2", "d-link-dir-615-rev-c1": "c1/c2",
+                "d-link-dir-615-d": "d1-d4", "d-link-dir-615-e1": "e1/e2",
+                "d-link-dir-615-e4": "e3-e5", "d-link-dir-615-h1": "h1/h2"},
+    "DIR-825": "d-link-dir-825-rev",
+    "DIR-860L": "d-link-dir-860l"
   },
-  "gl": {
-    "displayName": "GL Innovations",
-    "models": {
-      "(ar150)()": "AR150",
-      "(inet-6408a)-(v[0-9])": "iNet 6408a",
-      "(inet-6416a)-(v[0-9])": "iNet 6416a"
-    }
+
+  "GL Innovations": {
+    "AR150": "gl-ar150",
+    "iNet 6408a": "gl-inet-6408a",
+    "iNet 6416a": "gl-inet-6416a"
   },
-  "lemaker": {
-    "displayName": "LeMaker",
-    "models": {
-      "(banana-pi)().img.gz": "Banana Pi",
-      "(banana-pro)().img.gz": "Banana Pro",
-      "(lamobo)-(r1).img.gz": "Lamobo"
-    }
+
+  "LeMaker": {
+    "Banana Pi": "lemaker-banana-pi",
+    "Banana Pro": "lemaker-banana-pro",
+    "Banana Pi R1 (Lamobo)": {"lamobo-r1": "", "lemaker-lamobo-r1": ""}
   },
-  "linksys": {
-    "displayName": "Linksys",
-    "models": {
-      "(wrt160nl)()": "WRT160NL"
-    }
+
+  "Linksys": {
+    "WRT160NL": "linksys-wrt160nl",
+    "WRT1200AC": "linksys-wrt1200ac"
   },
-  "meraki": {
-    "displayName": "Meraki",
-    "models": {
-      "(mr12)()": "MR12",
-      "(mr16)()": "MR16",
-      "(mr62)()": "MR62",
-      "(mr66)()": "MR66"
-    }
+
+  "Meraki": {
+    "MR12": "meraki-mr12",
+    "MR16": "meraki-mr16",
+    "MR62": "meraki-mr62",
+    "MR66": "meraki-mr66"
   },
-  "mikrotik": {
-    "displayName": "Mikrotik",
-    "models": {
-      "(rootfs)().tar.gz": "--ignore--",
-      "(vmlinux)()-lzma.elf": "--ignore--"
-    }
+
+  "Mikrotik": {
+    "vmlinux": {"mikrotik-vmlinux-lzma" : "", "mikrotik-vmlinux.lzma" : ""},
+    "nand": {"mikrotik-nand-64m" : "64m", "mikrotik-nand-large" : "large"}
   },
-  "netgear": {
-    "displayName": "Netgear",
-    "models": {
-      "(wnr2200)()": "WNR2200",
-      "(wndr3700$)()": ["WNDR3700", "v1"],
-      "(wndr3700)(v[0-9])": ["WNDR3700"],
-      "(wndr3800$)()": "WNDR3800",
-      "(wndr4300$)()": "WNDR4300",
-      "(wndrmac$)()": ["WNDRMAC", "v1"],
-      "(wndrmac)(v[0-9])": "WNDRMAC"
-    }
+
+  "Netgear": {
+    "WNR2200": "netgear-wnr2200",
+    "WNDR3700": {"netgear-wndr3700": "v1", "netgear-wndr3700v2": "v2", "netgear-wndr3700v3": "v3", "netgear-wndr3700v4": "v4"},
+    "WNDR3800": "netgear-wndr3800",
+    "WNDR4300": "netgear-wndr4300",
+    "WNDRMAC": {"netgear-wndrmac": "v1", "netgear-wndrmacv2": "v2"},
   },
-  "onion": {
-    "displayName": "Onion",
-    "models": {
-      "(omega$)()": "Omega",
-    }
+
+  "Onion": {
+    "Omega": "onion-omega"
   },
-  "openmesh": {
-    "displayName": "Open-Mesh",
-    "models": {
-      "(mr1750$)()": ["MR1750", "v1"],
-      "(mr1750)(v[0-9])": ["MR1750"],
-      "(mr600$)()": ["MR600", "v1"],
-      "(mr600)(v[0-9])": ["MR600"],
-      "(mr900$)()": ["MR900", "v1"],
-      "(mr900)(v[0-9])": ["MR900"],
-      "(om2p-hs$)()": ["OM2P HS", "v1"],
-      "(om2p-hs)(v[0-9])": "OM2P HS",
-      "(om2p-lc$)()": ["OM2P LC", "v1"],
-      "(om2p$)()": ["OM2P", "v1"],
-      "(om2p)(v[0-9])": "OM2P",
-      "(om5p-ac$)()": ["OM5P-AC", "v1"],
-      "(om5p-ac)(v[0-9])": ["OM5P-AC"],
-      "(om5p$)()": "OM5P",
-      "(om5p-an)()": "OM5P-AN"
-    }
+
+  "Open-Mesh": {
+    "MR1750": {"openmesh-mr1750": "v1", "openmesh-mr1750v2": "v2"},
+    "MR600": {"openmesh-mr600": "v1", "openmesh-mr600v2": "v2"},
+    "MR900": {"openmesh-mr900": "v1", "openmesh-mr900v2": "v2"},
+    "OM2P HS": {"openmesh-om2p-hs": "v1", "openmesh-om2p-hsv3": "v3"},
+    "OM2P LC": "openmesh-om2p-lc",
+    "OM2P": {"openmesh-om2p": "v1", "openmesh-om2pv2": "v2"},
+    "OM5P-AC": {"openmesh-om5p-ac": "v1", "openmesh-om5p-acv2": "v2"},
+    "OM5P-AN": "openmesh-om5p-an",
+    "OM5P": "openmesh-om5p"
   },
-  "raspberry": {
-    "displayName": "Raspberry Pi Foundation",
-    "models": {
-      "(pi.img.gz)()": "PI",
-      "(pi-2.img.gz)()": "PI 2"
-    }
+
+  "PC Engines": {
+    "ALIX": "x86-geode"
   },
-  "tp-link": {
-    "displayName": "TP-Link",
-    "models": {
-      "(archer-c5)-(v[0-9]+)": "Archer C5",
-      "(archer-c7)-(v[0-9]+)": "Archer C7",
-      "(cpe210)-(v[0-9].[0-9])": "CPE 210",
-      "(cpe220)-(v[0-9].[0-9])": "CPE 220",
-      "(cpe510)-(v[0-9].[0-9])": "CPE 510",
-      "(cpe520)-(v[0-9].[0-9])": "CPE 520",
-      "(tl-mr13u)-(v[0-9]+)": "TL-MR13U",
-      "(tl-mr3020)-(v[0-9]+)": "TL-MR3020",
-      "(tl-mr3040)-(v[0-9]+)": "TL-MR3040",
-      "(tl-mr3220)-(v[0-9]+)": "TL-MR3220",
-      "(tl-mr3420)-(v[0-9]+)": "TL-MR3420",
-      "(tl-wa701n-nd)-(v[0-9]+)": "TL-WA701N-ND",
-      "(tl-wa750re)-(v[0-9]+)": "TL-WA750RE",
-      "(tl-wa7510n)-(v[0-9]+)": "TL-WA7510N",
-      "(tl-wa801n-nd)-(v[0-9]+)": "TL-WA801N-ND",
-      "(tl-wa830re)-(v[0-9]+)": "TL-WA830RE",
-      "(tl-wa850re)-(v[0-9]+)": "TL-WA850RE",
-      "(tl-wa860re)-(v[0-9]+)": "TL-WA860RE",
-      "(tl-wa901n-nd)-(v[0-9]+)": "TL-WA901N-ND",
-      "(tl-wdr3500)-(v[0-9]+)": "TL-WDR3500",
-      "(tl-wdr3600)-(v[0-9]+)": "TL-WDR3600",
-      "(tl-wdr4300)-(v[0-9]+)": "TL-WDR4300",
-      "(tl-wdr4900)-(v[0-9]+)": "TL-WDR4900",
-      "(tl-wr1043n-nd)-(v[0-9]+)": "TL-WR1043N-ND",
-      "(tl-wr2543n-nd)-(v[0-9]+)": "TL-WR2543N-ND",
-      "(tl-wr703n)-(v[0-9]+)": "TL-WR703N",
-      "(tl-wr710n)-(v[0-9]$|v[0-9].[0-9])": "TL-WR710N",
-      "(tl-wr740n-nd)-(v[0-9]+)": "TL-WR740N-ND",
-      "(tl-wr741n-nd)-(v[0-9]+)": "TL-WR741N-ND",
-      "(tl-wr743n-nd)-(v[0-9]+)": "TL-WR743N-ND",
-      "(tl-wr841n-nd)-(v[0-9]+)": "TL-WR841N-ND",
-      "(tl-wr842n-nd)-(v[0-9]+)": "TL-WR842N-ND",
-      "(tl-wr843n-nd)-(v[0-9]+)": "TL-WR843N-ND",
-      "(tl-wr940n-nd)-(v[0-9]+)": "TL-WR940N-ND",
-      "(tl-wr941n-nd)-(v[0-9]+)": "TL-WR941N-ND",
-    }
+
+  "Raspberry Pi Foundation": {
+    "PI": "raspberry-pi",
+    "PI 2": "raspberry-pi-2"
   },
-  "ubiquiti": {
-    "displayName": "Ubiquiti",
-    "models": {
-      "(airgateway)()": "AirGateway",
-      "(airrouter)()": "AirRouter",
-      "(bullet-m$)()": "--ignore--",
-      "(bullet-m2)()": ["Bullet", "M2"],
-      "(bullet-m5)()": ["Bullet", "M5"],
-      "(loco-m$)()": "--ignore--",
-      "(loco-m-xw)()": ["Nanostation Loco", "M XW"],
-      "(ls-sr71)()": "Litestation SR71",
-      "(nanostation-loco-m2)()": ["Nanostation Loco", "M2"],
-      "(nanostation-loco-m5)()": ["Nanostation Loco", "M5"],
-      "(nanostation-m$)()": "--ignore--",
-      "(nanostation-m-xw)()": ["Nanostation", "M XW"],
-      "(nanostation-m2)()": ["Nanostation", "M2"],
-      "(nanostation-m5)()": ["Nanostation", "M5"],
-      "(picostation-m$)()": "--ignore--",
-      "(picostation-m2$)()": ["Picostation", "M2"],
-      "(rocket-m$)()": "--ignore--",
-      "(rocket-m-xw)()": ["Rocket", "M XW"],
-      "(rocket-m2)()": ["Rocket", "M2"],
-      "(rocket-m5)()": ["Rocket", "M5"],
-      "(unifi$)()": "UniFi AP",
-      "(unifi-ap-pro)()": "UniFi AP Pro",
-      "(unifi-ac-pro)()": "UniFi AP AC Pro",
-      "(unifi-ac-lite)()": "UniFi AP AC Lite",
-      "(unifiap-outdoor$)()": "UniFi AP Outdoor",
-      "(unifiap-outdoor\\+$)()": "UniFi AP Outdoor+"
-    }
+
+  "TP-Link": {
+    "Archer C5": {"tp-link-archer-c5": "v1"},
+    "Archer C7": "tp-link-archer-c7",
+    "CPE 210": {"tp-link-cpe210": "", "tp-link-cpe210-220": ""},
+    "CPE 220": {"tp-link-cpe220": "", "tp-link-cpe210-220": ""},
+    "CPE 510": {"tp-link-cpe510": "", "tp-link-cpe510-520": ""},
+    "CPE 520": {"tp-link-cpe520": "", "tp-link-cpe510-520": ""},
+    "WBS 210": "tp-link-wbs210",
+    "WBS 510": "tp-link-wbs510",
+    "TL-MR13U": "tp-link-tl-mr13u",
+    "TL-MR3020": "tp-link-tl-mr3020",
+    "TL-MR3040": "tp-link-tl-mr3040",
+    "TL-MR3220": "tp-link-tl-mr3220",
+    "TL-MR3420": "tp-link-tl-mr3420",
+    "TL-WA701N/ND": {"tp-link-tl-wa701nd": "", "tp-link-tl-wa701n-nd": ""},
+    "TL-WA7210N/ND": "tp-link-tl-wa7210n",
+    "TL-WA750RE": "tp-link-tl-wa750re",
+    "TL-WA7510N": "tp-link-tl-wa7510n",
+    "TL-WA801N/ND": {"tp-link-tl-wa801n": "", "tp-link-tl-wa801n-nd": ""},
+    "TL-WA830RE": "tp-link-tl-wa830re",
+    "TL-WA850RE": "tp-link-tl-wa850re",
+    "TL-WA860RE": "tp-link-tl-wa860re",
+    "TL-WA901N/ND": {"tp-link-tl-wa901nd": "", "tp-link-tl-wa901n-nd": ""},
+    "TL-WDR3500": "tp-link-tl-wdr3500",
+    "TL-WDR3600": "tp-link-tl-wdr3600",
+    "TL-WDR4300": "tp-link-tl-wdr4300",
+    "TL-WDR4900": "tp-link-tl-wdr4900",
+    "TL-WR1043N/ND": {"tp-link-tl-wr1043n-nd": ""},
+    "TL-WR2543N/ND": {"tp-link-tl-wr2543n-nd": ""},
+    "TL-WR703N": "tp-link-tl-wr703n",
+    "TL-WR710N": "tp-link-tl-wr710n",
+    "TL-WR740N/ND": "tp-link-tl-wr740n-nd",
+    "TL-WR741N/ND": "tp-link-tl-wr741n-nd",
+    "TL-WR743N/ND": "tp-link-tl-wr743n-nd",
+    "TL-WR841N/ND": {"tp-link-tl-wr841n-nd": "", "tp-link-tl-wr841nd": ""},
+    "TL-WR842N/ND": {"tp-link-tl-wr842n-nd": ""},
+    "TL-WR843N/ND": {"tp-link-tl-wr843n-nd": ""},
+    "TL-WR940N/ND": {"tp-link-tl-wr940n": "", "tp-link-tl-wr940n-nd": "", "tp-link-tl-wr941nd-v4": "v1", "tp-link-tl-wr941nd-v5": "v2", "tp-link-tl-wr941nd-v6": "v3"},
+    "TL-WR941N/ND": {"tp-link-tl-wr941nd": "", "tp-link-tl-wr941n-nd": "", "tp-link-tl-wr941nd-v4": "v4", "tp-link-tl-wr941nd-v5": "v5", "tp-link-tl-wr941nd-v6": "v6"}
   },
-  "wd": {
-    "displayName": "Western Digital",
-    "models": {
-      "(my-net-n600)()": "My Net N600",
-      "(my-net-n750)()": "My Net N750"
-    }
+
+  "Ubiquiti": {
+    "AirGateway": {"ubnt-air-gateway": "", "ubiquiti-airgateway": ""},
+    "AirRouter": {"ubnt-air-router": "", "ubiquiti-airrouter": ""},
+    "Bullet": {"ubiquiti-bullet-m2": "M2", "ubiquiti-bullet-m5": "M5", "bullet-m": "--ignore--"},
+    "Litestation SR71": "ubiquiti-ls-sr71",
+    "NanoStation Loco": {"ubiquiti-loco-m-xw": "--ignore--",
+                         "ubiquiti-nanostation-loco-m2": "M2 XM", "ubiquiti-nanostation-loco-m2-xw": "M2 XW",
+                         "ubiquiti-nanostation-loco-m5": "M5 XM", "ubiquiti-nanostation-loco-m5-xw": "M5 XW"},
+    "NanoStation": {"ubiquiti-nanostation-m": "--ignore--", "ubiquiti-nano-m": "--ignore--", "ubiquiti-nanostation-m-xw": "--ignore--", "ubiquiti-nano-m-xw": "--ignore--",
+                    "ubiquiti-nanostation-m2": "M2 XM", "ubiquiti-nano-m2": "M2 XM", "ubiquiti-nanostation-m2-xw": "M2 XW", "ubiquiti-nano-m2-xw": "M2 XW",
+                    "ubiquiti-nanostation-m5": "M5 XM", "ubiquiti-nano-m5": "M5 XM", "ubiquiti-nanostation-m5-xw": "M5 XW", "ubiquiti-nano-m5-xw": "M5 XW"},
+    "PicoStation": {"ubiquiti-picostation-m": "M",
+                    "ubiquiti-picostation-m2": "M2"},
+    "Rocket": {"ubiquiti-rocket-m": "M", "ubiquiti-rocket-m-xw": "M XW",
+               "ubiquiti-rocket-m2": "M2", "ubiquiti-rocket-m2-xw": "M2 XW",
+               "ubiquiti-rocket-m5": "M5", "ubiquiti-rocket-m5-xw": "M5 XW"},
+    "Rocket Titanium": {"ubiquiti-rocket-m-ti": "--ignore--",
+                        "ubiquiti-rocket-m2-ti": "M2",
+                        "ubiquiti-rocket-m5-ti": "M5"},
+    "UniFi AP": {"ubiquiti-unifi": "--ignore--", "ubiquiti-unifi-ap": ""},
+    "UniFi AP LR": "ubiquiti-unifi-ap-lr",
+    "UniFi AP Pro": "ubiquiti-unifi-ap-pro",
+    "UniFi AP AC Pro": "ubiquiti-unifi-ac-pro",
+    "UniFi AP AC Lite": "ubiquiti-unifi-ac-lite",
+    "UniFi AP Outdoor": {"ubiquiti-unifi-outdoor": "", "ubiquiti-unifiap-outdoor": ""},
+    "UniFi AP Outdoor+": {"ubiquiti-unifi-outdoor-plus": "", "ubiquiti-unifiap-outdoor\\\+": "", "ubiquiti-unifiap-outdoor%2B": ""}
   },
+
+  "VoCore": {
+    "VoCore": "vocore",
+    "VoCore 2": "vocore2"
+  },
+
+  "Western Digital": {
+    "My Net N600": {"wd-my-net-n600": ""},
+    "My Net N750": {"wd-my-net-n750": ""}
+  },
+
   "x86": {
-    "displayName": "-",
-    "models": {
-      "(generic.img.gz)()": "generic 32bit",
-      "(64.img.gz)()": "generic 64bit",
-      "(virtualbox.vdi)()": "VirtualBox 32bit",
-      "(64-virtualbox.vdi)()": "VirtualBox 64bit",
-      "(vmware.vmdk)()": "VMware 32bit",
-      "(64-vmware.vmdk)()": "VMware 64bit",
-      "(kvm.img.gz)()": "KVM 32bit",
-      "(xen.img.gz)()": "XEN 32bit"
-    }
+    "generic 32bit": "x86-generic",
+    "generic 64bit": "x86-64",
+    "VirtualBox 32bit": "x86-virtualbox",
+    "VirtualBox 64bit": "x86-64-virtualbox",
+    "VMware 32bit": "x86-vmware",
+    "VMware 64bit": "x86-64-vmware",
+    "KVM 32bit": "x86-kvm",
+    "XEN 32bit": "x86-xen",
   }
 };
