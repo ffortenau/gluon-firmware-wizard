@@ -95,6 +95,12 @@ var firmwarewizard = function() {
   //var INVISIBLE_SEPARATOR = '#'; // debug
   //var NON_BREAKING_SPACE = '?'; // debug
 
+  var MODEL_SEARCHSTRING = 0;
+  var MODEL_STRIPPED_SEARCHSTRING = 1;
+  var MODEL_VENDOR = 2;
+  var MODEL_MODEL = 3;
+  var MODEL_MATCHED_REVISION = 4;
+
   var wizard = parseWizardObject();
   app.currentVersions = {};
   var images = {};
@@ -107,7 +113,7 @@ var firmwarewizard = function() {
     'kernel': "Kernel-Image"
   };
 
-  var reFileExtension = new RegExp(/.(bin|img.gz|img|tar|vdi|vmdk)/);
+  var reFileExtension = new RegExp(/.(bin|img.gz|img|tar)/);
   var reRemoveDashes = new RegExp(/-/g);
   var reSearchable = new RegExp('[-/ '+NON_BREAKING_SPACE+']', 'g');
   var reRemoveSpaces = new RegExp(/ /g);
@@ -123,6 +129,12 @@ var firmwarewizard = function() {
   if(config.prettyPrintVersionRegex !== undefined) {
     rePrettyPrintVersionRegex = new RegExp(config.prettyPrintVersionRegex);
   }
+
+  var PREVIEW_PICTURES_DIR = 'pictures/';
+  if(config.preview_pictures !== undefined) {
+    PREVIEW_PICTURES_DIR = config.preview_pictures;
+  }
+
 
   function buildVendorModelsReverse() {
     var vendormodels_reverse = {};
@@ -219,9 +231,9 @@ var firmwarewizard = function() {
       var previews = $('.imagePreview');
       var fullModelList = createSearchableModellist();
       for (var m in fullModelList) {
-        var searchstring = fullModelList[m][0];
-        var vendor = fullModelList[m][1];
-        var model = fullModelList[m][2];
+        var searchstring = fullModelList[m][MODEL_SEARCHSTRING];
+        var vendor = fullModelList[m][MODEL_VENDOR];
+        var model = fullModelList[m][MODEL_MODEL];
         previews.appendChild(createPicturePreview(vendor, model, searchstring));
       }
 
@@ -401,14 +413,14 @@ var firmwarewizard = function() {
     if (preview.indexOf('tp-link') != -1) preview += '-' + revision;
     preview = preview.replace('tp-link-tl-wa801n-nd-v3', 'tp-link-tl-wa801n-nd-v2'); // no preview picture for v3 yet
     preview = preview.replace('tp-link-tl-wr940n-v3', 'tp-link-tl-wr940n-v2'); // no preview picture for v3 yet
-    preview = preview.replace('ubiquiti-unifi-ap', 'ubiquiti-unifi'); // no preview picture for v3 yet
-    preview = preview.replace('x86-virtualbox', 'x86-virtualbox.vdi'); // no preview picture for v3 yet
-    preview = preview.replace('x86-64-virtualbox', 'x86-virtualbox.vdi'); // no preview picture for v3 yet
-    preview = preview.replace('x86-vmware', 'x86-vmware.vmdk'); // no preview picture for v3 yet
-    preview = preview.replace('x86-64-vmware', 'x86-vmware.vmdk'); // no preview picture for v3 yet
-    preview = preview.replace('x86-generic', 'x86-generic.img'); // no preview picture for v3 yet
-    preview = preview.replace('x86-64', 'x86-generic.img'); // no preview picture for v3 yet
-    preview = preview.replace('x86-kvm', 'x86-kvm.img'); // no preview picture for v3 yet
+    preview = preview.replace('ubiquiti-unifi-ap', 'ubiquiti-unifi');
+    preview = preview.replace('x86-virtualbox', 'x86-virtualbox.vdi');
+    preview = preview.replace('x86-64-virtualbox', 'x86-virtualbox.vdi');
+    preview = preview.replace('x86-vmware', 'x86-vmware.vmdk');
+    preview = preview.replace('x86-64-vmware', 'x86-vmware.vmdk');
+    preview = preview.replace('x86-generic', 'x86-generic.img');
+    preview = preview.replace('x86-64', 'x86-generic.img');
+    preview = preview.replace('x86-kvm', 'x86-kvm.img');
 
     // collect branch versions
     app.currentVersions[branch] = version;
@@ -454,8 +466,8 @@ var firmwarewizard = function() {
 
   function getImageTypes(modelList) {
     if (modelList.length == 1) {
-      var vendor = modelList[0][1];
-      var model = modelList[0][2];
+      var vendor = modelList[0][MODEL_VENDOR];
+      var model = modelList[0][MODEL_MODEL];
       return images[vendor][model]
         .map(function(e) { return e.type; })
         .filter(function(value, index, self) { return self.indexOf(value) === index; })
@@ -487,8 +499,12 @@ var firmwarewizard = function() {
         var searchingstring = searchable(
           vendors[i]+INVISIBLE_SEPARATOR+models[j]+INVISIBLE_SEPARATOR+
           revisions.map(atomic).join(''));
-        // the last entry stores the matched revision
-        modelList.push([searchingstring, vendors[i], models[j], revisions, '']);
+
+        // The 2nd searchingstring entry is used to strip already matched query
+        // parts. This is needed when vendor and model are the same (e.g.
+        // "Vocore Vocore") and there are more models from the same vendor.
+        // The last entry is used to store the revision matched by the searchstring.
+        modelList.push([searchingstring, searchingstring, vendors[i], models[j], '']);
       }
     }
     return modelList;
@@ -497,7 +513,7 @@ var firmwarewizard = function() {
   // search for models (and vendors)
   function searchModel(query) {
     var foundImageType = '';
-    var modelList = createSearchableModellist();
+    var modelList = createSearchableModellist(); // TODO: maybe generate once + deepcopy
 
     // search for vendors and models
     var queryparts = query.split(' ');
@@ -509,21 +525,22 @@ var firmwarewizard = function() {
       }
       var filteredModelList = [];
       for (var m in modelList) {
-        if (modelList[m][0].indexOf(q) != -1) {
+        if (modelList[m][MODEL_STRIPPED_SEARCHSTRING].indexOf(q) != -1) {
+          modelList[m][MODEL_STRIPPED_SEARCHSTRING] = modelList[m][MODEL_STRIPPED_SEARCHSTRING].replace(q, '');
           // add revision to modelList entry (if unique)
-          var revisions = getRevisions(modelList[m][1], modelList[m][2]);
+          var revisions = getRevisions(modelList[m][MODEL_VENDOR], modelList[m][MODEL_MODEL]);
           if (revisions.length == 1 && revisions[0] == 'alle') {
-            modelList[m][4] = revisions[0];
+            modelList[m][MODEL_MATCHED_REVISION] = revisions[0];
           } else {
             var r = revisions.map(atomic).map(searchable).indexOf(atomicQ);
             if (r != -1) {
-              modelList[m][4] = revisions[r]; // add revision to modelList entry
+              modelList[m][MODEL_MATCHED_REVISION] = revisions[r]; // add revision to modelList entry
             }
           }
           filteredModelList.push(modelList[m]);
         } else {
           var typeKeys = Object.keys(typeNames);
-          var typeValues = Object.values(typeNames);
+          var typeValues = ObjectValues(typeNames);
           for (var k in typeKeys) {
             if (searchable(typeKeys[k]).substr(0, q.length) == q ||
                 searchable(typeValues[k]).substr(0, q.length) == q) {
@@ -544,8 +561,8 @@ var firmwarewizard = function() {
     searchResult.imageTypes = [];
     searchResult.modelList = modelList;
     if (modelList.length == 1) {
-      searchResult.model = modelList[0][2];
-      searchResult.revision = modelList[0][4];
+      searchResult.model = modelList[0][MODEL_MODEL];
+      searchResult.revision = modelList[0][MODEL_MATCHED_REVISION];
       searchResult.imageTypes = getImageTypes(modelList);
     }
     return searchResult;
@@ -555,8 +572,8 @@ var firmwarewizard = function() {
   function getVendorFromModelList(modelList) {
     var vendor = '';
     for (var i in modelList) {
-      if (vendor === '') vendor = modelList[i][1];
-      if (vendor != modelList[i][1]) return '';
+      if (vendor === '') vendor = modelList[i][MODEL_VENDOR];
+      if (vendor != modelList[i][MODEL_VENDOR]) return '';
     }
     return vendor;
   }
@@ -577,7 +594,8 @@ var firmwarewizard = function() {
     }
 
     var image = document.createElement('img');
-    image.src = 'pictures/'+images[vendor][model][latestRevisionIndex].preview;
+
+    image.src = PREVIEW_PICTURES_DIR+images[vendor][model][latestRevisionIndex].preview;
     image.alt = name;
     image.addEventListener('error', firmwarewizard.setDefaultImg);
 
@@ -605,7 +623,7 @@ var firmwarewizard = function() {
   }
 
   function setDefaultImg(e) {
-    fallbackImg = 'pictures/no_picture_available.jpg';
+    fallbackImg = PREVIEW_PICTURES_DIR+'no_picture_available.jpg';
     if (e.target.src.indexOf(fallbackImg) == -1) {
       e.target.src = fallbackImg;
     }
@@ -620,9 +638,9 @@ var firmwarewizard = function() {
     }
 
     for (var f in modelList) {
-      var searchstring = modelList[f][0];
-      var vendor = modelList[f][1];
-      var model = modelList[f][2];
+      var searchstring = modelList[f][MODEL_SEARCHSTRING];
+      var vendor = modelList[f][MODEL_VENDOR];
+      var model = modelList[f][MODEL_MODEL];
 
       for(p = 0; p < previews.length; p++) {
         if (previews[p].getAttribute('data-searchstring') == searchstring) {
@@ -797,23 +815,23 @@ var firmwarewizard = function() {
 
       for (var i in revisions) {
         var rev = revisions[i];
-        if (rev.branch == 'experimental') {
-          var button = document.createElement('button');
-          button.className = 'btn dl-expermental';
-          button.addEventListener('click', toggleExperimentalWarning);
-          button.innerText = rev.branch+' (' +prettyPrintVersion(rev.version)+')';
-          $('#branchselect').appendChild(button);
+        var a = document.createElement('a');
+        a.href = rev.location;
+        a.className = 'btn';
+        a.innerText = rev.branch +
+                      (rev.size!==''?' ['+rev.size+']':'') +
+                      ' (' +prettyPrintVersion(rev.version)+')';
 
-          var btn = document.createElement('a');
-          btn.href = rev.location;
-          btn.className = 'btn';
-          btn.innerText = 'Download für Experimentierfreudige';
-          $('#branch-experimental-dl').appendChild(btn);
+        if (rev.branch == 'experimental') {
+          if($('#branchselect .dl-expermental') === null) {
+            var button = document.createElement('button');
+            button.className = 'btn dl-expermental';
+            button.addEventListener('click', toggleExperimentalWarning);
+            button.innerText = 'Experimentelle Firmware anzeigen';
+            $('#branchselect').appendChild(button);
+          }
+          $('#branch-experimental-dl').appendChild(a);
         } else {
-          var a = document.createElement('a');
-          a.href = rev.location;
-          a.className = 'btn';
-          a.innerText = rev.branch+' (' +prettyPrintVersion(rev.version)+')';
           $('#branchselect').appendChild(a);
         }
       }
@@ -852,11 +870,22 @@ var firmwarewizard = function() {
       var branches = ObjectValues(config.directories)
         .filter(function(value, index, self) { return self.indexOf(value) === index; });
 
-      $('#currentVersions').innerHTML = branches.reduce(function(ret, branch, i) {
+      $('#currentVersions').innerText = '';
+      if (config.changelog !== undefined) {
+        var a = document.createElement('a');
+        a.href = config.changelog;
+        a.innerText = 'CHANGELOG';
+        $('#currentVersions').appendChild(a);
+        var text = document.createTextNode(' // ');
+        $('#currentVersions').appendChild(text);
+      }
+
+      var versionStr = branches.reduce(function(ret, branch, i) {
         ret += ((i === 0) ? '' : ' // ') + branch;
         ret += (branch in app.currentVersions) ?  (': '  + prettyPrintVersion(app.currentVersions[branch])) : '';
         return ret;
       }, '');
+      $('#currentVersions').appendChild(document.createTextNode(versionStr));
     }
     updateCurrentVersions();
   }
@@ -962,13 +991,6 @@ var firmwarewizard = function() {
 
   // parse the contents of the given directories
   function loadDirectories(callback) {
-    // sort by length to get the longest match
-    var matches = Object.keys(vendormodels_reverse).sort(function(a, b) {
-      if (a.length < b.length) return 1;
-      if (a.length > b.length) return -1;
-      return 0;
-    });
-
     var parseSite = function(data, indexPath) {
       var basePath = indexPath.substring(0, indexPath.lastIndexOf('/') + 1);
       var branch = config.directories[indexPath];
@@ -991,7 +1013,6 @@ var firmwarewizard = function() {
         }
       } while (hrefMatch);
 
-
       // check if we loaded all directories
       sitesLoadedSuccessfully++;
       if (sitesLoadedSuccessfully == Object.keys(config.directories).length) {
@@ -1002,8 +1023,20 @@ var firmwarewizard = function() {
     // match all links
     var reLink = new RegExp('href="([^"]*)"', 'g');
 
-    // match image files
-    var reMatch = new RegExp('('+matches.join('|')+')[.-]');
+    // sort by length to get the longest match
+    var matches = Object.keys(vendormodels_reverse).sort(function(a, b) {
+      if (a.length < b.length) return 1;
+      if (a.length > b.length) return -1;
+      return 0;
+    });
+
+    // prepare the matches for use in regex (join by pipe and escape dots)
+    var matchString = matches.join('|').replace(/\./g, '\.');
+
+    // match image files. The match either ends with
+    // - a dash or dot (if a file extension will follow)
+    // - the end of the expression (if the file extension is part of the regex)
+    var reMatch = new RegExp('('+matchString+')([.-]|$)');
 
     // check if image regexes contain regular expressions themself
     var reCheckRegex = new RegExp(/[^\\]+[+?*]/);

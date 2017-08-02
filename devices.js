@@ -95,6 +95,7 @@ var vendormodels = {
   },
 
   "TP-Link": {
+    "Archer C2600": {"tp-link-archer-c2600": "v1"},
     "Archer C5": {"tp-link-archer-c5": "v1"},
     "Archer C7": "tp-link-archer-c7",
     "CPE 210": {"tp-link-cpe210": "", "tp-link-cpe210-220": ""},
@@ -103,6 +104,7 @@ var vendormodels = {
     "CPE 520": {"tp-link-cpe520": "", "tp-link-cpe510-520": ""},
     "WBS 210": "tp-link-wbs210",
     "WBS 510": "tp-link-wbs510",
+    "RE450": "tp-link-re450",
     "TL-MR13U": "tp-link-tl-mr13u",
     "TL-MR3020": "tp-link-tl-mr3020",
     "TL-MR3040": "tp-link-tl-mr3040",
@@ -110,6 +112,7 @@ var vendormodels = {
     "TL-MR3420": "tp-link-tl-mr3420",
     "TL-WA701N/ND": {"tp-link-tl-wa701nd": "", "tp-link-tl-wa701n-nd": ""},
     "TL-WA7210N/ND": "tp-link-tl-wa7210n",
+    "TL-WA730RE": "tp-link-tl-wa730re",
     "TL-WA750RE": "tp-link-tl-wa750re",
     "TL-WA7510N": "tp-link-tl-wa7510n",
     "TL-WA801N/ND": {"tp-link-tl-wa801n": "", "tp-link-tl-wa801n-nd": ""},
@@ -136,8 +139,10 @@ var vendormodels = {
   },
 
   "Ubiquiti": {
-    "AirGateway": {"ubnt-air-gateway": "", "ubiquiti-airgateway": ""},
+    "AirGateway": {"ubnt-air-gateway": "", "ubiquiti-airgateway": "",
+                   "ubiquiti-airgateway-lr": "LR", "ubiquiti-airgateway-pro": "Pro"},
     "AirRouter": {"ubnt-air-router": "", "ubiquiti-airrouter": ""},
+    "AirRouter X": "ubnt-erx",
     "Bullet": {"ubiquiti-bullet-m2": "M2", "ubiquiti-bullet-m5": "M5", "bullet-m": "--ignore--"},
     "Litestation SR71": "ubiquiti-ls-sr71",
     "NanoStation Loco": {"ubiquiti-loco-m-xw": "--ignore--",
@@ -160,7 +165,7 @@ var vendormodels = {
     "UniFi AP AC Pro": "ubiquiti-unifi-ac-pro",
     "UniFi AP AC Lite": "ubiquiti-unifi-ac-lite",
     "UniFi AP Outdoor": {"ubiquiti-unifi-outdoor": "", "ubiquiti-unifiap-outdoor": ""},
-    "UniFi AP Outdoor+": {"ubiquiti-unifi-outdoor-plus": "", "ubiquiti-unifiap-outdoor\\\+": "", "ubiquiti-unifiap-outdoor%2B": ""}
+    "UniFi AP Outdoor+": {"ubiquiti-unifi-outdoor-plus": "", "ubiquiti-unifiap-outdoor\\\+": "", "ubiquiti-unifiap-outdoor%2B": "", "ubiquiti-unifiap-outdoor%2b": ""}
   },
 
   "VoCore": {
@@ -176,10 +181,11 @@ var vendormodels = {
   "x86": {
     "generic 32bit": "x86-generic",
     "generic 64bit": "x86-64",
-    "VirtualBox 32bit": "x86-virtualbox",
-    "VirtualBox 64bit": "x86-64-virtualbox",
-    "VMware 32bit": "x86-vmware",
-    "VMware 64bit": "x86-64-vmware",
+    "VirtualBox 32bit": {"x86-virtualbox.vdi": "", "x86-generic.vdi": ""},
+    "VirtualBox 64bit": {"x86-64-virtualbox.vdi": "", "x86-64.vdi": ""},
+    "VMware 32bit": {"x86-vmware.vmdk": "", "x86-generic.vmdk": ""},
+    "VMware 64bit": {"x86-64-vmware.vmdk": "", "x86-64-generic.vmdk": "",
+                     "x86-64.vmdk": ""},
     "KVM 32bit": "x86-kvm",
     "XEN 32bit": "x86-xen",
   }

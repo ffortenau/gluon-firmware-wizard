@@ -27,5 +27,9 @@ var config = {
     // some demo sources
     './images/gluon-factory-example.html': 'stable',
     './images/gluon-sysupgrade-example.html': 'stable'
-  }
+  },
+  // path to preview pictures directory
+  preview_pictures: 'pictures/',
+  // link to changelog
+  changelog: 'CHANGELOG.html'
 };
